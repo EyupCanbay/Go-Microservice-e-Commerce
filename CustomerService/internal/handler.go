@@ -1,8 +1,10 @@
 package internal
 
 import (
-	"github.com/labstack/echo/v4"
 	"net/http"
+	"tesodev-korpes/CustomerService/internal/types"
+
+	"github.com/labstack/echo/v4"
 )
 
 type Handler struct {
@@ -32,7 +34,7 @@ func (h *Handler) GetByID(c echo.Context) error {
 }
 
 func (h *Handler) Create(c echo.Context) error {
-	var customer interface{}
+	var customer *types.Customer
 	if err := c.Bind(&customer); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}

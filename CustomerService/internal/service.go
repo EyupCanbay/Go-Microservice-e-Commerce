@@ -32,8 +32,12 @@ func (s *Service) GetByID(ctx context.Context, id string) (*types.Customer, erro
 	return customer, nil
 }
 
-func (s *Service) Create(ctx context.Context, customer interface{}) error {
-	return s.repo.Create(ctx, customer)
+func (s *Service) Create(ctx context.Context, customer *types.Customer) error {
+	err := s.repo.Create(ctx, customer)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *Service) Update(ctx context.Context, id string, update interface{}) error {
