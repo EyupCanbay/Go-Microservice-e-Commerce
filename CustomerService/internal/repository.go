@@ -2,8 +2,10 @@ package internal
 
 import (
 	"context"
-	"go.mongodb.org/mongo-driver/mongo"
 	"tesodev-korpes/CustomerService/internal/types"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type Repository struct {
@@ -34,4 +36,23 @@ func (r *Repository) Update(ctx context.Context, id string, update interface{}) 
 func (r *Repository) Delete(ctx context.Context, id string) error {
 	// Placeholder method
 	return nil
+}
+
+func (r *Repository) GetList(ctx context.Context) ([]types.Customer, error) {
+	cursor, err := r.collection.Find(ctx, bson.M{})
+	if err != nil {
+		return nil, err
+	}
+	defer cursor.Close(ctx)
+
+	var customers []types.Customer
+	for cursor.Next(ctx) {
+		var customer types.Customer
+		if err := cursor.Decode(&customer); err != nil {
+			return nil, err
+		}
+		customers = append(customers, customer)
+	}
+
+	return customers, nil
 }
