@@ -9,6 +9,15 @@ import (
 // you can delete after you'd completed the helper method, its a placeholder put here just to prevent getting errors at
 // the beginning
 func ToCustomerResponse(customer *types.Customer) *types.CustomerResponseModel {
-	//return &types.CustomerResponseModel{FirstName: customer.FirstName, LastName: customer.LastName}
-	return nil
+	return &types.CustomerResponseModel{
+		Id:          customer.Id,
+		FirstName:   customer.FirstName,
+		LastName:    customer.LastName,
+		Email:       customer.Email,
+		Phone:       customer.Phone,
+		Addresses:   customer.Addresses,
+		DateOfBirth: customer.DateOfBirth,
+		Gender:      customer.Gender,
+		Notes:       customer.Notes,
+	}
 }
