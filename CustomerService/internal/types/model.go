@@ -1,6 +1,10 @@
 package types
 
-import "time"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 // Address, bir kullanıcının coğrafi adres bilgilerini içerir.
 // Address contains the geographical address information for a user.
@@ -20,21 +24,19 @@ type Address struct {
 // Customer, veritabanındaki müşteri kaydının tamamını temsil eder.
 // Customer represents the entire customer record in the database.
 type Customer struct {
-	Id                       string            `bson:"_id" json:"id"`                                                  // Benzersiz Müşteri Kimliği / Unique Customer Identifier
-	FirstName                string            `bson:"first_name" json:"first_name"`                                   // Müşterinin Adı / Customer's First Name
-	LastName                 string            `bson:"last_name" json:"last_name"`                                     // Müşterinin Soyadı / Customer's Last Name
-	Email                    string            `bson:"email" json:"email"`                                             // Müşterinin E-posta Adresi / Customer's Email Address
-	PasswordHash             string            `bson:"password_hash" json:"-"`                                         // Parolanın şifrelenmiş hali / Hashed password
-	Phone                    string            `bson:"phone" json:"phone"`                                             // Müşterinin Telefon Numarası / Customer's Phone Number
-	Addresses                []Address         `bson:"addresses" json:"addresses"`                                     // Müşterinin kaydedilmiş adres listesi / A list of the customer's saved addresses
-	DefaultBillingAddressID  string            `bson:"default_billing_address_id" json:"default_billing_address_id"`   // Varsayılan Fatura Adresi Kimliği / Default Billing Address ID
-	DefaultShippingAddressID string            `bson:"default_shipping_address_id" json:"default_shipping_address_id"` // Varsayılan Teslimat Adresi Kimliği / Default Shipping Address ID
-	IsActive                 bool              `bson:"is_active" json:"is_active"`                                     // Hesabın aktif olup olmadığını belirtir / Indicates if the account is active
-	DateOfBirth              time.Time         `bson:"date_of_birth" json:"date_of_birth"`                             // Müşterinin Doğum Tarihi / Customer's Date of Birth
-	Gender                   string            `bson:"gender" json:"gender"`                                           // Cinsiyet / Gender
-	Notes                    []string          `bson:"notes" json:"notes"`                                             // Müşteriyle ilgili notlar dizisi / Array of notes about the customer
-	Preferences              map[string]string `bson:"preferences" json:"preferences"`                                 // Kullanıcı tercihleri (örn: tema, dil) / User preferences (e.g., theme, language)
-	ProfilePictureURL        string            `bson:"profile_picture_url" json:"profile_picture_url"`                 // Profil Resmi URL'si / Profile Picture URL
-	CreatedAt                time.Time         `bson:"created_at" json:"created_at"`                                   // Kayıt Oluşturulma Zamanı / Record Creation Time
-	UpdatedAt                time.Time         `bson:"updated_at" json:"updated_at"`                                   // Kayıt Güncellenme Zamanı / Record Last Update Time
+	Id                primitive.ObjectID `bson:"_id" json:"id"`                                  // Benzersiz Müşteri Kimliği / Unique Customer Identifier
+	FirstName         string             `bson:"first_name" json:"first_name"`                   // Müşterinin Adı / Customer's First Name
+	LastName          string             `bson:"last_name" json:"last_name"`                     // Müşterinin Soyadı / Customer's Last Name
+	Email             string             `bson:"email" json:"email"`                             // Müşterinin E-posta Adresi / Customer's Email Address
+	PasswordHash      string             `bson:"password_hash" json:"-"`                         // Parolanın şifrelenmiş hali / Hashed password
+	Phone             string             `bson:"phone" json:"phone"`                             // Müşterinin Telefon Numarası / Customer's Phone Number
+	Addresses         []Address          `bson:"addresses" json:"addresses"`                     // Müşterinin kaydedilmiş adres listesi / A list of the customer's saved addresses
+	IsActive          bool               `bson:"is_active" json:"is_active"`                     // Hesabın aktif olup olmadığını belirtir / Indicates if the account is active
+	DateOfBirth       time.Time          `bson:"date_of_birth" json:"date_of_birth"`             // Müşterinin Doğum Tarihi / Customer's Date of Birth
+	Gender            string             `bson:"gender" json:"gender"`                           // Cinsiyet / Gender
+	Notes             []string           `bson:"notes" json:"notes"`                             // Müşteriyle ilgili notlar dizisi / Array of notes about the customer
+	Preferences       map[string]string  `bson:"preferences" json:"preferences"`                 // Kullanıcı tercihleri (örn: tema, dil) / User preferences (e.g., theme, language)
+	ProfilePictureURL string             `bson:"profile_picture_url" json:"profile_picture_url"` // Profil Resmi URL'si / Profile Picture URL
+	CreatedAt         time.Time          `bson:"created_at" json:"created_at"`                   // Kayıt Oluşturulma Zamanı / Record Creation Time
+	UpdatedAt         time.Time          `bson:"updated_at" json:"updated_at"`                   // Kayıt Güncellenme Zamanı / Record Last Update Time
 }
