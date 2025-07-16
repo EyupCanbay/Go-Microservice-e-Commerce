@@ -2,6 +2,7 @@ package internal
 
 import (
 	"context"
+	"errors"
 	"tesodev-korpes/CustomerService/internal/types"
 )
 
@@ -37,7 +38,11 @@ func (s *Service) Create(ctx context.Context, customer interface{}) error {
 }
 
 func (s *Service) Update(ctx context.Context, id string, update interface{}) error {
-	return s.repo.Update(ctx, id, update)
+	updateMap, ok := update.(map[string]interface{})
+	if !ok {
+		return errors.New("invalid update payload")
+	}
+	return s.repo.Update(ctx, id, updateMap)
 }
 
 func (s *Service) Delete(ctx context.Context, id string) error {

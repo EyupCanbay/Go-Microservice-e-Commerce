@@ -1,8 +1,9 @@
 package internal
 
 import (
-	"github.com/labstack/echo/v4"
 	"net/http"
+
+	"github.com/labstack/echo/v4"
 )
 
 type Handler struct {
@@ -76,7 +77,7 @@ func (h *Handler) PartialUpdate(c echo.Context) error {
 func (h *Handler) Delete(c echo.Context) error {
 	id := c.Param("id")
 	if err := h.service.Delete(c.Request().Context(), id); err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
-	return c.JSON(http.StatusOK, "Customer deleted successfully")
+	return c.JSON(http.StatusOK, map[string]string{"message": "Customer deleted successfully"})
 }
